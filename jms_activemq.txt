@@ -34,3 +34,13 @@ Mensageria
 RPC
 Banco de dados compartilhado
 Troca de arquivos
+
+*** AULA02
+
+* Configuração jndi.properties
+https://activemq.apache.org/jndi-support.html
+
+InitialContext initialContext = new InitialContext();
+
+* InitialContext porp padrão procura automaticamente o jndi.properties no classpath do projeto.
+
