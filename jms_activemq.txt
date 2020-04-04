@@ -37,10 +37,58 @@ Troca de arquivos
 
 *** AULA02
 
-* Configuração jndi.properties
+** Configuração jndi.properties
 https://activemq.apache.org/jndi-support.html
+
 
 InitialContext initialContext = new InitialContext();
 
-* InitialContext porp padrão procura automaticamente o jndi.properties no classpath do projeto.
+** InitialContext porp padrão procura automaticamente o jndi.properties no classpath do projeto.
+
+- ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
+O lookup é feito através da classe InitialContext que por sua vez se baseia no arquivo de configuração jndi.properties
+
+** O arquivo jndi.properties e a classe InitialContext fazem parte de um outro padrão JavaEE, o JNDI (Java Naming e Diretory Service).
+
+** O lookup é uma operação muito comum em ambientes JavaEE para descobrir ou pegar um recurso que o servidor disponibiliza. Dependendo do servidor os recursos podem variar muito. Por exemplo, usando um servidor de aplicação, podemos pegar configurações de segurança, pool de conexão, gerenciadores de transação ou caches, etc.
+No nosso caso o servidor ou Middelware é o ActiveMQ e ele automaticamente disponibiliza a ConnectionFactory. O ActiveMQ não é um servidor de aplicação e sim um Message Broker.
+
+** A Session no JMS abstrai o trabalho transacional e confirmação do recebimento da mensagem. Além disso, também serve para produzir o MessageConsumer! É um objeto todo poderoso que criamos a partir da conexão:
+
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+O primeiro parâmetro do método createSession define se queremos usar o tratamento da transação como explícito. Como colocamos false, não é preciso chamar session.commit() ou session.rollback(). Faremos ainda mais exercícios com estes parâmetros para entender melhor o comportamento transacional da Session.
+
+O Session.AUTO_ACKNOWLEDGE diz que queremos automaticamente (através da Session) confirmar o recebimento da mensagem JMS. Também há outras configurações disponíveis que iremos testar mais para frente.
+
+** Qual é a ordem correta das classes envolvidas para construir um MessageConsumer?
+Tudo começa com a ConnectionFactory que pegamos através do InitalContext. A fábrica cria a Connection que por sua vez instancia a Session. A Session é responsável por criar o MessageConsumer.
+
+** documentacao
+https://docs.oracle.com/javaee/5/api/javax/jms/Destination.html
+https://docs.oracle.com/javaee/7/api/javax/jms/MessageConsumer.html#receive-long-
+
+** Objeto especifico Queue - DESVANTAGEM
+Normalmente usa-se as interfaces mais genéricas que funcionam com qualquer destino, não só Queue. Como veremos existem outros destinos.
+
+Além disso, a interface QueueReceiver só possui um método a mais, o getQueueName() que é pouco útil.
+
+Queue q = receiver.getQueueName(); //única diferença entre MessageConsumer e QueueReceiver
+
+** Para saber mais: JMS 2.0
+
+Estamos usando o JMS na versão 1.1 mas já existe uma atualização do padrão para a versão 2.0 que faz parte do Java EE 7.
+
+No entanto, a grande maioria dos MOMs no mercado trabalham ainda com essa versão 1.1. Com ActiveMQ isso não é diferente e tudo funciona ainda com JMS 1.1.
+
+Vimos os passos para criar um MessageConsumer com JMS 1.1:
+
+ConnectionFactory -> Connection  -> Session -> MessageConsumer
+No JMS 2.0 o desenho seria um pouco mais simples pois foi introduzido uma nova interface JMSContext que combina o trabalho da Connection e Session:
+
+ConnectionFactory -> JMSContext -> JMSConsumer
+
+Segue também um artigo no blog da Caelum sobre o novo padrão JMS 2.0:
+
+http://blog.caelum.com.br/a-nova-api-do-jms-2-0-no-java-ee-7/
 
