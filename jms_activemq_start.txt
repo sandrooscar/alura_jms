@@ -1,0 +1,22 @@
+Nesse exercício instalaremos o ActiveMQ como mostramos no vídeo. Estamos assumindo que você já tenha o JRE instalado.
+
+1) Baixe o ZIP do ActiveMQ disponível aqui e extraia em um pasta de fácil acesso pelo terminal (por exemplo C:\mensageria).
+
+1.1) No Windows é preciso executar o script InstallService.bat no terminal da pasta win32 ou win64 antes de seguir os próximos passos.
+
+2) Abra um terminal e entre na pasta bin da pasta do ActiveMQ.
+
+3) Inicie o ActiveMQ pelo comando:
+
+Windows:
+
+activemq start
+Unix:
+
+sh activemq console
+Fique atento ao console para pegar possível erros.
+
+4) Abra um navegador e acesse: http://localhost:8161/admin
+
+Login: admin
+Senha admin

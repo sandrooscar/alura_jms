@@ -1,0 +1,36 @@
+*** AULA01
+
+MOM - middleware orientado a mensagem (MOM (Message Oriented Middleware))
+
+middleware famoso no mundo Java - ActiveMQ
+
+http://activemq.apache.org/version-5-getting-started
+ActiveMQ
+
+* CONCEITO
+Identificamos duas vantagens:
+
+1) As mensagens serão entregues assincronamente.
+
+2) O sistema que recebe a mensagem está arquiteturalmente desacoplado do sistema que envia as mensagens.
+
+O MOM (ou Broker) é um lugar onde os dados ficam salvos temporariamente, até o outro sistema conseguir processá-los. O MOM garante a entrega em algum momento e ajuda assim a lidar com indisponibilidade de sistemas e picos de processamento.
+
+Em geral, a mensageria é um estilo de integração alternativo ao modelo RPC (Remote Procedure Call). O RPC (como o SOAP ou REST) é síncrono e acoplado pela interface de uso.
+
+Como é importante saber as vantagens, também devemos conhecer as desvantagens. Como desvantagem principal podemos dizer que usando um MOM temos que manter mais um componente arquitetural. Nosso sistema fica mais complexo e mais custoso de manter.
+
+Os brokers são uma parte fundamental na integração de sistemas e existem vários no mercado, alguns de grandes fornecedores. Exemplos populares são o RabbitMQ e o WebsphereMQ e, claro, o nosso ActiveMQ.
+
+Alguns até estão disponíveis na nuvem como Amazon SQS e iron.io.
+
+** App de consumo de mensagens
+java -cp activemq-all-5.12.0.jar;aula-jms.jar br.com.caelum.TesteMensageria consome
+
+** Os 4 estilos de integração
+Os 4 estilos são:
+
+Mensageria
+RPC
+Banco de dados compartilhado
+Troca de arquivos
