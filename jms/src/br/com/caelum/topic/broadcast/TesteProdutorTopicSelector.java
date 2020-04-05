@@ -36,7 +36,7 @@ public class TesteProdutorTopicSelector {
 		
 		for (int i = 0; i < 3; i++) {
 			Message message = session.createTextMessage("<pedido><id>"+i+"</id></pedido>");
-			message.setBooleanProperty("ebook", false);
+			//message.setBooleanProperty("ebook", false);
 			System.out.println("Send message: "+i);
 			producer.send(message);
 		}

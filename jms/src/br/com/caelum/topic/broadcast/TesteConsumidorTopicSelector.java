@@ -40,7 +40,7 @@ public class TesteConsumidorTopicSelector {
 		
 		//criando o consumidor, utilizando o lookup financeiro (queue.financeiro) do arquivo jndi.properties
 		Topic topico = (Topic) context.lookup("loja");
-		MessageConsumer consumer = session.createDurableSubscriber(topico, "assinatura", "ebook=false",false);
+		MessageConsumer consumer = session.createDurableSubscriber(topico, "assinatura", "ebook is null OR ebook=false",false);
 		
 		//adicionando listener para receber uma ou mais mensagens do tipo texto
 		consumer.setMessageListener(new MessageListener(){
