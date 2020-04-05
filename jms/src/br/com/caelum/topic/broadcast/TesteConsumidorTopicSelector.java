@@ -29,7 +29,7 @@ public class TesteConsumidorTopicSelector {
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		
 		//cria a conexao com o activemq
-		Connection connection = factory.createConnection();
+		Connection connection = factory.createConnection("user", "senha");
 		//identifica a conexão para o tópico
 		connection.setClientID("consumidorTopico01");
 		//inicia a conexão
