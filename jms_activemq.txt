@@ -164,3 +164,11 @@ Agora, vamos voltar àquele parâmetro, logo após o nosso selector, que é fals
 Não podemos usar messages selectors para buscar algum valor dentro do corpo da mensagem, porém ele permite buscar dentro do cabeçalho e propriedades da mensagem.
 
 O segundo ponto é que os messages selectors possuem uma sintaxe parecida com SQL para busca de informações.
+
+**Desvantagem dos selector consumers
+
+Uma desvantagem seria que a regra/condição do recebimento da mensagem está nos consumidores. Muitas vezes queremos centralizar essas regras no lado do servidor. Para isso não devemos usar Selective Consumers e sim apenas consumidores simples. No lado do servidor (ActiveMQ) aplicaríamos um filtro, central, que define se a mensagem pode passar ou não.
+
+E claro que existe também para isso um padrão de integração, o Message Filter: http://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html
+
+O JMS e ActiveMQ não dão suporte ao este comportamento mas existem brokers mais sofisticados onde isso é possível. Exemplos disso são os Enterprise Service Bus (ESB) que implementam a maioria dos padrões de integração.
