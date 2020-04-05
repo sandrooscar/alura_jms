@@ -43,11 +43,13 @@ public class TesteProdutorTopic {
 		
 		Pedido pedido = new PedidoFactory().geraPedidoComValores();
 
-		StringWriter writer = new StringWriter();
-		JAXB.marshal(pedido, writer);
-		String xml = writer.toString();
-
-		Message message = session.createTextMessage(xml);
+//		StringWriter writer = new StringWriter();
+//		JAXB.marshal(pedido, writer);
+//		String xml = writer.toString();
+//
+//		Message message = session.createTextMessage(xml);
+		
+		Message message = session.createObjectMessage(pedido);
 		producer.send(message);
 		
 		session.close();

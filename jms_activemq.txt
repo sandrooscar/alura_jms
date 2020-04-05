@@ -186,4 +186,22 @@ Já vimos no curso ObjectMessage e TextMessage. Não usamos uma MapMessage que s
 
 **O ActiveMQ vai tentar entregar a mensagem de novo (redelivery) mas não para sempre! Isso seria custoso demais e muito provável inútil. Uma mensagem que falhou na entrega 10 vezes, provável que continua falhando nas próximas entregas também.
 
-Quantas vezes o MOM realmente tenta a reentrega é especifico de cada um, no caso do ActiveMQ o valor padrão é 6 vezes. Isso pode ser reconfigurado como apresentado na documentação: http://activemq.apache.org/message-redelivery-and-dlq-handling.html
+Quantas vezes o MOM realmente tenta a reentrega é especifico de cada um, no caso do ActiveMQ o valor padrão é 6 vezes. Isso pode ser reconfigurado como apresentado na documentação: 
+
+http://activemq.apache.org/message-redelivery-and-dlq-handling.html
+
+**Atenção: Exceção ao receber ObjectMessage
+
+A partir da versão 5.12.2 do ActiveMQ é preciso configurar explicitamente quais pacotes podem ser deserializados. Sem ter essa configuração você receberá um exceção na hora de consumir uma ObjectMessage. A exceção indica um problema de segurança:
+
+Caused by: java.lang.ClassNotFoundException: Forbidden class br.com.caelum.modelo.Pedido! This class is not allowed to be serialized. Add package with 'org.apache.activemq.SERIALIZABLE_PACKAGES' system property.
+Isto acontece pois o ActiveMQ se tornou mais rígido e exige que você configura explicitamente quais pacote são permitidas na deserialização::
+
+public class TesteConsumidorTopicoComercial {
+
+  public static void main(String[] args) {
+    System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","java.lang,br.com.caelum.modelo");
+    //resto do codigo omitido
+Isso permite deserializar qualquer objeto de uma classe dos pacotes java.lang ou br.com.caelum.modelo. Caso queira permitir todos os pacotes, coloque:
+
+System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");

@@ -8,10 +8,12 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.InitialContext;
+
+import br.com.caelum.modelo.Pedido;
 
 public class TesteConsumidorTopic {
 
@@ -24,6 +26,7 @@ public class TesteConsumidorTopic {
 //		javax.naming.Context context = new InitialContext(props);
 
 		//inicializa o context JNI
+		System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");
 		InitialContext context = new InitialContext();
 		//pega a fabrica configurada no jni
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
@@ -48,9 +51,10 @@ public class TesteConsumidorTopic {
 
 			@Override
 			public void onMessage(Message message) {
-				TextMessage textMessage = (TextMessage)message;
+				ObjectMessage objectMessage = (ObjectMessage)message;
 				try {
-					System.out.println("Message Listener - Recebendo mensagem: "+textMessage.getText());
+					Pedido pedido = (Pedido)objectMessage.getObject();
+					System.out.println("Message Listener - Recebendo mensagem: "+pedido.getCodigo());
 				} catch (JMSException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
