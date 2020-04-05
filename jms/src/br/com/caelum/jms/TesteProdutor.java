@@ -28,7 +28,8 @@ public class TesteProdutor {
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		
 		//cria a conexao com o activemq
-		Connection connection = factory.createConnection("user", "senha");
+//		Connection connection = factory.createConnection("user", "senha");
+		Connection connection = factory.createConnection();
 		//inicia a conexão
 		connection.start();
 		

@@ -172,3 +172,18 @@ Uma desvantagem seria que a regra/condição do recebimento da mensagem está no
 E claro que existe também para isso um padrão de integração, o Message Filter: http://www.enterpriseintegrationpatterns.com/patterns/messaging/Filter.html
 
 O JMS e ActiveMQ não dão suporte ao este comportamento mas existem brokers mais sofisticados onde isso é possível. Exemplos disso são os Enterprise Service Bus (ESB) que implementam a maioria dos padrões de integração.
+
+***AULA07
+- Utilizando o JAXB podemos enviar o XML do objeto desejado, no entanto, como o produtor e consumidor são escritos em Java, podemos utilizar o ObjectStream para escrever, nesse caso no topico loja.
+A BytesMessage é para enviar um fluxo de bytes através do JMS. Além disso, existe um StreamMessage que serve para enviar um fluxo de primitivos algo raro de utilizar.
+
+Importante lembrar que as classes e todos os atributos dele devem implementar a interface java.io.Serializable!
+
+** As mensagens que geram erro são chamadas de mensagens venenosas e ficam armazenadas no activeMQ na aba [queues] fila de nome activeMQ.DLQ (Dead Letter Message). Existe um número de tentativas que o activeMQ tenta entregar e mensagem, depois desde número a mensagem (venenosa) é transferida para a lista DLQ.
+
+No mundo de mensageria esse tipo de fila se chama de DLQ (Dead Letter Queue). Mais concreto, o nome fisico da fila no ActiveMQ é ActiveMQ.DLQ.
+Já vimos no curso ObjectMessage e TextMessage. Não usamos uma MapMessage que serve para enviar pares de valores, parecido com um HashMap.
+
+**O ActiveMQ vai tentar entregar a mensagem de novo (redelivery) mas não para sempre! Isso seria custoso demais e muito provável inútil. Uma mensagem que falhou na entrega 10 vezes, provável que continua falhando nas próximas entregas também.
+
+Quantas vezes o MOM realmente tenta a reentrega é especifico de cada um, no caso do ActiveMQ o valor padrão é 6 vezes. Isso pode ser reconfigurado como apresentado na documentação: http://activemq.apache.org/message-redelivery-and-dlq-handling.html

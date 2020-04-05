@@ -1,5 +1,7 @@
 package br.com.caelum.topic.broadcast;
 
+import java.io.StringWriter;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -7,6 +9,10 @@ import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.InitialContext;
+import javax.xml.bind.JAXB;
+
+import br.com.caelum.modelo.Pedido;
+import br.com.caelum.modelo.PedidoFactory;
 
 public class TesteProdutorTopic {
 
@@ -23,7 +29,8 @@ public class TesteProdutorTopic {
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		
 		//cria a conexao com o activemq
-		Connection connection = factory.createConnection("user", "senha");
+//		Connection connection = factory.createConnection("user", "senha");
+		Connection connection = factory.createConnection();
 		//inicia a conexão
 		connection.start();
 		
@@ -34,10 +41,14 @@ public class TesteProdutorTopic {
 		Destination topico = (Destination) context.lookup("loja");
 		MessageProducer producer = session.createProducer(topico);
 		
-		for (int i = 0; i < 50; i++) {
-			Message message = session.createTextMessage("<pedido><id>"+i+"</id></pedido>");
-			producer.send(message);
-		}
+		Pedido pedido = new PedidoFactory().geraPedidoComValores();
+
+		StringWriter writer = new StringWriter();
+		JAXB.marshal(pedido, writer);
+		String xml = writer.toString();
+
+		Message message = session.createTextMessage(xml);
+		producer.send(message);
 		
 		session.close();
 		connection.close();
