@@ -1,19 +1,18 @@
 package br.com.caelum.jms;
 
-import java.util.Scanner;
+import java.util.Enumeration;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class TesteProdutor {
+public class TesteMonitoramento {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
@@ -35,15 +34,20 @@ public class TesteProdutor {
 		//cria a session para interagir com a fila
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		
-		//criando o produtor, utilizando o lookup financeiro (queue.financeiro) do arquivo jndi.properties
+		//lookup financeiro (queue.financeiro) do arquivo jndi.properties
 		Destination fila = (Destination) context.lookup("financeiro");
-		MessageProducer producer = session.createProducer(fila);
+		QueueBrowser browser = session.createBrowser((Queue) fila);
+		Queue queue = browser.getQueue();
 		
-		for (int i = 0; i < 5000; i++) {
-			Message message = session.createTextMessage("<pedido><id>"+i+"</id></pedido>");
-			producer.send(message);
+		System.out.println(queue.getQueueName());
+		System.out.println(queue.toString());
+		Enumeration<?> enumeration = browser.getEnumeration();
+		while (enumeration.hasMoreElements()){
+			Message mensagem = (Message)enumeration.nextElement();
+			System.out.println("Mensagem da fila: "+((TextMessage) mensagem).getText());
 		}
 		
+		browser.close();
 		session.close();
 		connection.close();
 		context.close();

@@ -20,6 +20,7 @@ public class TesteConsumidor {
 //		Properties props = new Properties(); 
 //		props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.activemq.jndi.ActiveMQInitialContextFactory"); 
 //		props.setProperty(Context.PROVIDER_URL, "vm://localhost:8161"); 
+//		properties.setProperty("queue.financeiro", "fila.financeiro");
 //		javax.naming.Context context = new InitialContext(props);
 
 		//inicializa o context JNI

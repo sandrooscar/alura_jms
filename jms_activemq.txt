@@ -119,5 +119,14 @@ No mundo de padrões de integração esse modelo de entrega se chama Competing C
 
 http://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html
 
+** Trabalhando de forma distribuída
+Editar o arquivo jndi.properties e alterar o valor da propriedade java.naming.provider.url colocando como valor o ip do MOM.
 
+A propriedade java.naming.provider.url recebe o IP do MOM que queremos enviar/consumir mensagens. Além disso, essa propriedade faz parte do arquivo jndi.properties.
+
+** (Opcional) Criando um QueueBrowser
+- Dependendo da nossa aplicação, podemos precisar apenas checar (monitoramento) as mensagens que chegaram para uma determinada fila sem consumi-la. Ou seja, apenas queremos ver sem tirá-las da fila. Para isso podemos usar um componente do JMS chamado QueueBrowser, usado para navegar sobre as mensagens sem consumi-las.
+
+https://www.programcreek.com/java-api-examples/?api=javax.jms.QueueBrowser
+https://docs.oracle.com/javaee/7/api/javax/jms/QueueBrowser.html
 
