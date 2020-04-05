@@ -130,3 +130,22 @@ A propriedade java.naming.provider.url recebe o IP do MOM que queremos enviar/co
 https://www.programcreek.com/java-api-examples/?api=javax.jms.QueueBrowser
 https://docs.oracle.com/javaee/7/api/javax/jms/QueueBrowser.html
 
+***AULA05
+-Topics espalham a mensagem, ou seja, transmitem a mensagem oara quem quer ouvir
+-Na Aba tópics do activeMQ driar um novo tópico
+-Se utilizarmos o codigo do consumidor mudando apenas o nome do lookup, o sistema só receberá a mensagem quando estiver online;
+-O produtor é praticamente o mesmo, mudando apenas no nome do lookup
+-no tópico é necessário identificação para receber a mensagems mesmo quando o sistema estiver offline
+-Se tivermos consumidores identificados (assinaturas duráveis) o tópico vai guardar a mensagem até a entrega acontecer.
+
+**Utilização do Topic
+-Nós devemos identificar uma conexão com o método setClientId("clientId"), por exemplo:
+
+connection.setClientID("comercial");
+e identificar o assinatura (o consumidor) com o método createDurableSubscriber(topico,"nomeAssinatura"):
+
+MessageConsumer consumer = session.createDurableSubscriber(topico, "assinatura");
+
+-Assinaturas duráveis só existem para tópicos. Uma assinatura durável é nada mais do que um consumidor de um tópico que se identificou. Ou seja, o tópico sabe da existência desse consumidor.
+
+
