@@ -13,7 +13,7 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.InitialContext;
 
-public class TesteConsumidorTopic {
+public class TesteConsumidorTopicComercial {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
@@ -31,7 +31,7 @@ public class TesteConsumidorTopic {
 		//cria a conexao com o activemq
 		Connection connection = factory.createConnection();
 		//identifica a conexão para o tópico
-		connection.setClientID("consumidorTopico01");
+		connection.setClientID("consumidorTopicoComercial");
 		//inicia a conexão
 		connection.start();
 		
