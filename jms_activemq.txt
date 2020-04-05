@@ -148,4 +148,19 @@ MessageConsumer consumer = session.createDurableSubscriber(topico, "assinatura")
 
 -Assinaturas duráveis só existem para tópicos. Uma assinatura durável é nada mais do que um consumidor de um tópico que se identificou. Ou seja, o tópico sabe da existência desse consumidor.
 
+***AULA06
+Topic por padrão não garante a entrega, se nenhum consumidor estiver online e não estiver identificado, a mensagem será perdida.
 
+**Considerações sobre o Message Selector
+Não podemos usar messages selectors para buscar algum valor dentro do corpo da mensagem, ou seja, nosso XML, porém ele permite buscar dentro do cabeçalho e propriedades da mensagem. A consequência disso para nós é que precisaremos de alguma forma alterar o cabeçalho e propriedades da mensagem para que o message selector execute seu papel.
+
+O segundo ponto é que os messages selectors possuem uma sintaxe parecida com SQL para busca de informações.
+
+**Mensagens noLocal
+
+Agora, vamos voltar àquele parâmetro, logo após o nosso selector, que é false. Ele se chama "noLocal" e diz respeito à conexão. Uma conexão pode servir para criar várias assinaturas, mas também produtores. Poderíamos usar a mesma conexão para também enviar a mensagem. A questão é se estamos interessados em mensagens enviadas pela nossa própria conexão. Com false indicamos que não queremos receber essas mensagens. Para nós não faz diferença, por que usamos sempre uma nova conexão para enviar ou receber uma mensagem.
+
+**Características de Seletores
+Não podemos usar messages selectors para buscar algum valor dentro do corpo da mensagem, porém ele permite buscar dentro do cabeçalho e propriedades da mensagem.
+
+O segundo ponto é que os messages selectors possuem uma sintaxe parecida com SQL para busca de informações.
