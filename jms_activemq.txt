@@ -104,4 +104,20 @@ Mais informações sobre este padrão Observer na página do Enterprise Integrat
 
 http://www.enterpriseintegrationpatterns.com/patterns/messaging/ObserverJmsExample.html
 
+***AULA04
+
+- Quando é feita a distribuição, apenas um dos consumidores recebe a mensagem.
+Quando trabalhamos com filas, as mensagens são entregues apenas para um consumidor. Se houver mais de um consumidor online a mensagem é entregue apenas para um dos (e nunca para os dois).
+
+- Como mostrado no video faça o teste com dois consumidores online ao mesmo tempo. Envie várias mensagens de uma vez só (por exemplo 1000).
+
+Nesse caso os dois consumidores competem um com ou outro pelo recebimento das mensagens. Nunca os dois consumidores vão receber a mesma mensagem.
+
+Uma fila garante a entrega para um consumidor, ou seja, acontece um balanceamento das mensagens.
+
+No mundo de padrões de integração esse modelo de entrega se chama Competing Consumers:
+
+http://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html
+
+
 
