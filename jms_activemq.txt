@@ -92,3 +92,16 @@ Segue também um artigo no blog da Caelum sobre o novo padrão JMS 2.0:
 
 http://blog.caelum.com.br/a-nova-api-do-jms-2-0-no-java-ee-7/
 
+***AULA03
+
+- A interface é MessageListener, inclusive o método do consume que o associa a um objeto que implementa essa interface é setMessageListener. Não é incomum passarmos como parâmetro para o método uma classe anônima, poupando assim a criação de mais uma classe. Criando uma classe ou usando uma classe a anônima, é o método onMessage que precisamos implementar.
+
+- O JMS segue o mesmo padrão de projeto Observer! A diferença é que JMS é remoto ou distribuído. Ou seja, no padrão Observer originalmente descrito no livro GOF, tudo acontece na memória, o Observer desacopla objetos. Com JMS, a comunicação entre Producer e Consumer é remota, desacoplamento arquitetural.
+
+Para fazer a comparação com o exemplo apresentado na pergunta: O botão seria um produtor de mensagem (ainda não criamos um produtor pelo JMS, apenas usamos o console de administração, isso vem no próximo capítulo). O ActionListener representa o MessageListener do mundo JMS e o ActionEvent seria a Message. Faz sentido?
+
+Mais informações sobre este padrão Observer na página do Enterprise Integration Patterns:
+
+http://www.enterpriseintegrationpatterns.com/patterns/messaging/ObserverJmsExample.html
+
+

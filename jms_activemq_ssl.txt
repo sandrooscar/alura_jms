@@ -1,0 +1,32 @@
+É possível usar SSL na conexão como é mostrado nos seguintes passos.
+
+1 - Primeiro você deve gerar as chaves SSL para o broker e para os clients:
+
+keytool -genkey -alias broker -keyalg RSA -keystore broker.ks
+keytool -genkey -alias client -keyalg RSA -keystore client.ks
+2 - Você exportará a chave do broker para os clientes:
+
+keytool -export -alias broker -keystore broker.ks -file broker_cert
+3 - Então importe os certificados do broker como uma chave de confiança do cliente:
+
+keytool -import -alias broker -keystore client.ts -file broker_cert
+4 - Com as chaves você irá habilitá-las no conf/activemq.xml:
+
+<beans
+  <amq:broker useJmx="false" persistent="false">
+
+    <amq:sslContext>
+      <amq:sslContext
+            keyStore="broker.ks" keyStorePassword="password"
+            trustStore="client.ks" trustStorePassword="password"/>
+    </amq:sslContext>
+
+    <amq:transportConnectors>
+      <amq:transportConnector uri="ssl://localhost:61616" />
+    </amq:transportConnectors>
+
+  </amq:broker>
+</beans>
+Por fim basta você acessa via SSL:
+
+java.naming.provider.url=ssl://localhost:61616
