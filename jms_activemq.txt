@@ -219,8 +219,35 @@ Para especificar DLQ especificas para cada fila é necessário fazer a seguinte 
   </deadLetterStrategy>
 </policyEntry>
 
-*** Utilizando Acknowledge
+** Utilizando Acknowledge
 Além do Session.AUTO_ACKNOWLEDGE existem mais três formas de confirmação de recebimento de mensagens:
 - CLIENT_ACKNOWLEDGE -> nessa configuração é necessário chamar o método message.acknowledge() para confirmar o recebimento,
 caso contrário a mensagem permanecerá pendente na fila e não haverá reenvio.
 - SESSION_TRANSACTED - podemos confirmar o não o recebimento da mensagem atraves de session.commit ou session.rollback.
+Caso acontece rollback a mensagem será reenviada e depois será transferida para a DLQ.
+
+****AULA08
+NON_PERSISTENT : as mensagens com essa configuração não serão restauradas caso activemq seja reiniciado ou esteja offline;
+
+PERSISTENT: Quando as mensagens são configuradas dessa forma, são gravadas em banco de dados interno do activeMQ.
+
+** PRIORIZAÇÂO DE MENSAGENS
+-O ActiveMQ não vem por padrão com o suporte a priorização ativado, sendo necessário ativá-lo no arquivo activemq.xml
+<policyEntry queue=">" prioritizedMessages="true"/>
+
+-Enviando mensagem com priorização e tempo de vida de 5 segundos
+producer.send(nessage, DeliveryMode.NON_PERSISTENT, 3, 5000);
+
+-O terceiro parâmetro é um interger que indica o nível de priorização. Vai de 0 a 9. O valor 0 é a menor priorização e o valor 9 é a maior.
+-Exercicio
+Qual das opções abaixo configura um producer para enviar uma mensagem não persistente, de extrema prioridade que que expirará em 10 segundos?
+producer.send(message, DeliveryMode.NON_PERSISTENT, 9, 10000);
+
+O parâmetro 9 é a prioridade máxima de uma mensagem e o parâmetro 10000 é a quantidade de tempo em milissegundos. É através de DeliveryMode.NON_PERSISTENT que criamos uma mensagem não persistente.
+
+http://activemq.apache.org/how-can-i-support-priority-queues.html
+
+
+
+
+

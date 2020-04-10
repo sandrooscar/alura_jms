@@ -1,4 +1,6 @@
 /jms/.settings
 /jms/bin
+/jms-prioridade/.settings
+/jms-prioridade/bin
 .classpath
 .project
