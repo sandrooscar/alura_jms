@@ -205,3 +205,8 @@ public class TesteConsumidorTopicoComercial {
 Isso permite deserializar qualquer objeto de uma classe dos pacotes java.lang ou br.com.caelum.modelo. Caso queira permitir todos os pacotes, coloque:
 
 System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");
+
+** ObjectMessage ou TextMessage
+ObjectMessage -> maior acoplamento
+TextMessage -> menos acoplamento e maior flexibilidade
+
