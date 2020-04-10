@@ -210,3 +210,11 @@ System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");
 ObjectMessage -> maior acoplamento
 TextMessage -> menos acoplamento e maior flexibilidade
 
+
+** DLQ especificas
+Para especificar DLQ especificas para cada fila é necessário fazer a seguinte configuração:
+<policyEntry queue=">">
+  <deadLetterStrategy>
+      <individualDeadLetterStrategy queuePrefix="DLQ." useQueueForQueueMessages="true"/>
+  </deadLetterStrategy>
+</policyEntry>

@@ -1,4 +1,4 @@
-package br.com.caelum.queue.dlq;
+package br.com.caelum.queue.redelivery;
 
 import java.util.Scanner;
 
@@ -13,9 +13,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-import br.com.caelum.modelo.Pedido;
-
-public class TesteConsumidorDLQ {
+public class TesteConsumidorRedelivery {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
@@ -37,24 +35,16 @@ public class TesteConsumidorDLQ {
 		//cria a session para interagir com a fila
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		
-		//criando o consumidor, utilizando o lookup financeiro (queue.DLQ) do arquivo jndi.properties
-		Destination filaDLQ = (Destination) context.lookup("DLQ");
-		MessageConsumer consumer = session.createConsumer(filaDLQ);
+		Destination filaRedelivery = (Destination) context.lookup("redelivery");
+		MessageConsumer consumer = session.createConsumer(filaRedelivery);
 		
 		//adicionando listener para receber uma ou mais mensagens do tipo texto
 		consumer.setMessageListener(new MessageListener(){
 
 			@Override
-			public void onMessage(Message message) {
-				ObjectMessage objectMessage = (ObjectMessage)message;
-				try {
-					Pedido pedido = (Pedido)objectMessage.getObject();
-					System.out.println("Message Listener - Recebendo mensagem: "+pedido.getCodigo());
-				} catch (JMSException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			public void onMessage(Message message){
+					ObjectMessage str = (ObjectMessage)message;
 				}
-			}
 		});
 		
 		new Scanner(System.in).nextLine();
