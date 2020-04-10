@@ -218,3 +218,9 @@ Para especificar DLQ especificas para cada fila é necessário fazer a seguinte 
       <individualDeadLetterStrategy queuePrefix="DLQ." useQueueForQueueMessages="true"/>
   </deadLetterStrategy>
 </policyEntry>
+
+*** Utilizando Acknowledge
+Além do Session.AUTO_ACKNOWLEDGE existem mais três formas de confirmação de recebimento de mensagens:
+- CLIENT_ACKNOWLEDGE -> nessa configuração é necessário chamar o método message.acknowledge() para confirmar o recebimento,
+caso contrário a mensagem permanecerá pendente na fila e não haverá reenvio.
+- SESSION_TRANSACTED - podemos confirmar o não o recebimento da mensagem atraves de session.commit ou session.rollback.
